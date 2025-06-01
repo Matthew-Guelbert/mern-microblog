@@ -80,11 +80,15 @@ This project follows a simplified MVC pattern on the backend for maintainability
 ## Next Steps / TODO
 
 - Implement user authentication with JWT
+- Implement OAuth to allow third party logins
 - Connect frontend to backend APIs
 - Add real CRUD operations for posts and users
 - Enhance user profile pages
 - Notifications and role-based access control
 - Email verification and password reset
+- Explore Socket.IO to implement real-time chatting
+- Explore background jobs and queues
+- Deployment!
 
 ---
 
