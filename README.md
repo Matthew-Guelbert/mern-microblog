@@ -94,7 +94,7 @@ This project follows a simplified MVC pattern on the backend for maintainability
 
 ## Contact 
 
-Developed by Matthew Guelbert
-Email: contact.mguelbert@gmail.com
+Developed by Matthew Guelbert <br>
+Email: contact.mguelbert@gmail.com <br>
 Github: https://github.com/Matthew-Guelbert
 
