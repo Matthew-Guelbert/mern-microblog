@@ -1,5 +1,3 @@
-// /server/models/User.js
-
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -13,8 +11,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
       trim: true,
+      lowercase: true,
+    },
+    avatar: {
+      type: String,
+      default: "", // You can use a placeholder if desired
     },
     email: {
       type: String,
@@ -27,14 +29,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    avatar: {
-      type: String,
-      default: "",
-    },
     bio: {
       type: String,
       default: "",
-      maxlength: 160,
     },
     website: {
       type: String,
@@ -51,12 +48,6 @@ const userSchema = new mongoose.Schema(
       twitter: { type: String, default: "" },
       github: { type: String, default: "" },
       linkedin: { type: String, default: "" },
-      // Add more if needed
-    },
-    theme: {
-      type: String,
-      enum: ["light", "dark"],
-      default: "light",
     },
     followers: [
       {
@@ -70,12 +61,6 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    posts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
     roles: {
       type: [String],
       default: ["user"],
@@ -87,18 +72,19 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    notifications: [
-      {
-        message: String,
-        read: { type: Boolean, default: false },
-        createdAt: { type: Date, default: Date.now },
-      },
-    ],
+    theme: {
+      type: String,
+      enum: ["light", "dark"],
+      default: "light",
+    },
+    notifications: {
+      type: [Object],
+      default: [],
+    },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
+
 export default User;
