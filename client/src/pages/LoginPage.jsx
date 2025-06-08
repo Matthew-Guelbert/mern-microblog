@@ -47,31 +47,54 @@ function LoginPage() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const newErrors = validateForm()
+    e.preventDefault();
+    const newErrors = validateForm();
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
+      setErrors(newErrors);
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     setErrors({})
 
     try {
-      // Here you would typically make an API call to log in the user
-      // For demonstration, we'll simulate a successful login
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-      console.log("Login successful", formData)
+      let data;
+      let text;
 
-      // Simulate successful login
-      localStorage.setItem("user", JSON.stringify({ email: formData.email, name: "User" }))
-      navigate("/")
-    } catch {
-      setErrors({ general: "Login failed. Please try again." })
+      try {
+        text = await res.text();
+        data = text ? JSON.parse(text) : {};
+      } catch (err) {
+        console.error("Invalid JSON from server:", err, "Raw text:", text);
+        setErrors({ general: "Unexpected server response. Please try again later." });
+        setIsLoading(false);
+        return;
+      }
+
+      if (!res.ok) {
+        console.error("Server returned error status:", res.status, "Response:", data);
+        throw new Error(data.message || "Login failed");
+      }
+
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect to home page
+      navigate("/");
+    } catch (err) {
+      setErrors({ general: err.message || "An error occurred during login" });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 

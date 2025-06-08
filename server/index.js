@@ -6,6 +6,7 @@ import morgan from "morgan";
 
 // Route imports
 import authRoutes from "./routes/authRoutes.js";
+import protectedRoutes from "./routes/protectedRoutes.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/protected", protectedRoutes);
 
 // Basic test route
 app.get("/", (req, res) => {

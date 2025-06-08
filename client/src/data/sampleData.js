@@ -74,12 +74,12 @@ export const samplePosts = [
       username: "elonmusk",
     },
     content:
-      "The future of sustainable energy is here. Excited to announce our new solar panel technology. #renewable #tech",
+      "Man, F*** TRUMP! He wouldn't have won the election if it wasn't for me. Ungrateful. #politics #trump",
     timeAgo: "2d",
     likes: 4521,
     comments: 892,
     shares: 1203,
-    tags: ["renewable", "tech"],
+    tags: ["politics", "trump"],
   },
   {
     id: "7",

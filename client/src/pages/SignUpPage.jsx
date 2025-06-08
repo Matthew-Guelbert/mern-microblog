@@ -73,56 +73,50 @@ function SignUpPage() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const newErrors = validateForm()
+  e.preventDefault()
+  const newErrors = validateForm()
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors)
+    return
+  }
 
-    setIsLoading(true)
-    setErrors({})
+  setIsLoading(true)
+  setErrors({})
 
-    try {
-      // Here you would typically make an API call to your backend
-      // const response = await fetch('/api/auth/signup', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     name: formData.name,
-      //     username: formData.username,
-      //     email: formData.email,
-      //     password: formData.password
-      //   })
-      // })
-      // const data = await response.json()
-
-      // For demo purposes, simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      console.log("Sign up attempt:", {
+  try {
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         name: formData.name,
         username: formData.username,
         email: formData.email,
-      })
+        password: formData.password,
+      }),
+    })
 
-      // Simulate successful signup
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          email: formData.email,
-          name: formData.name,
-          username: formData.username,
-        }),
-      )
-      navigate("/")
-    } catch {
-      setErrors({ general: "Sign up failed. Please try again." })
-    } finally {
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error('Signup error:', errorData)
+      setErrors({ general: errorData.message || "Sign up failed. Please try again." })
       setIsLoading(false)
+      return
     }
+
+    const data = await response.json()
+    console.log('Signup success:', data)
+
+    localStorage.setItem('user', JSON.stringify(data.user || data))
+    navigate('/')
+  } catch (error) {
+    console.error('Network or unexpected error:', error)
+    setErrors({ general: "Sign up failed. Please try again." })
+  } finally {
+    setIsLoading(false)
   }
+}
+
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">

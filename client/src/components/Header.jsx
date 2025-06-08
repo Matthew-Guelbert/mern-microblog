@@ -98,7 +98,7 @@ function Header() {
                   </svg>
                 </button>
 
-                {/* Dropdown menu */}
+                {/* Dropdown menu - Consider changing, group-hover:block can be finicky, consider onMouseEnter/Leave or maybe a useState */} 
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
                   <Link
                     to="/profile"
